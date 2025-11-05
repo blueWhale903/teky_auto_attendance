@@ -1,14 +1,20 @@
 import requests
 import datetime
-import time
 import random
+from datetime import date
+from datetime import datetime, time
 
-# # Set your target time (24-hour format)
-# target_time = "22:30"
+def is_today_weekday():
+    today = date.today()
+    return today.weekday() < 5
 
-# # Wait until the target time
-# while datetime.datetime.now().strftime("%H:%M") != target_time:
-#     time.sleep(1)
+reason = ""
+is_weekday = is_today_weekday()
+
+if (is_weekday):
+    reason = "Checkin trường ngoài"
+else:
+    reason = "Checkin cơ sở tân bình"
 
 # API endpoint
 url = "https://erp.teky.edu.vn/web/dataset/call_kw/hr.employee/attendance_manual"
@@ -25,24 +31,62 @@ headers = {
 }
 
 # Payload (customize employee ID if needed)
-payload = {
+payload_checkin = {
     "jsonrpc": "2.0",
     "method": "call",
     "params": {
         "args": [
-            [8466],  # Your employee ID
+            [
+                8466
+            ],
+            "hr_attendance.hr_attendance_action_my_attendances",
+            "Đi làm việc ở bên ngoài",
+            reason
+        ],
+        "model": "hr.employee",
+        "method": "my_attendance_manual",
+        "kwargs": {}
+    },
+    "id": random.randint(100000000, 999999999)
+}
+
+payload_checkout = {
+    "jsonrpc": "2.0",
+    "method": "call",
+    "params": {
+        "args": [
+            [
+                8466
+            ],
             "hr_attendance.hr_attendance_action_my_attendances"
         ],
         "model": "hr.employee",
         "method": "attendance_manual",
         "kwargs": {}
     },
-    "id": random.randint(1, 1000000)
+    "id": random.randint(100000000, 999999999)
 }
 
 # Send the POST request
-response = requests.post(url, json=payload, headers=headers)
+# Get the current time
+current_time = datetime.now().time()
+
+# Define the target time (5 PM)
+five_pm = time(17, 0, 0) # Hour 17 represents 5 PM in 24-hour format
+
+if current_time < five_pm:
+    response = requests.post(url, json=payload_checkin, headers=headers)
+else:
+    response = requests.post(url, json=payload_checkout, headers=headers)
 
 # Output result
+if (response.status_code == 200):
+    if current_time < five_pm:
+        print("✅ Checkin Successfully!")
+    else:
+        print("✅ Checkout Successfully!")
+else:
+    print("❌ Checkin/Checkout failed!")
+
 print("Status Code:", response.status_code)
 print("Response:", response.text)
