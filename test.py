@@ -88,5 +88,4 @@ if (response.status_code == 200):
 else:
     print("❌ Checkin/Checkout failed!")
 
-print("Status Code:", response.status_code)
 print("Response:", response.text)
