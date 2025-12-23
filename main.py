@@ -3,6 +3,7 @@ import datetime
 import random
 from datetime import date
 from datetime import datetime, time
+import certifi
 
 def is_today_weekday():
     today = date.today()
@@ -75,9 +76,9 @@ current_time = datetime.now().time()
 five_pm = time(17, 0, 0) # Hour 17 represents 5 PM in 24-hour format
 
 if current_time < five_pm:
-    response = requests.post(url, json=payload_checkin, headers=headers)
+    response = requests.post(url, json=payload_checkin, headers=headers, verify=certifi.where())
 else:
-    response = requests.post(url, json=payload_checkout, headers=headers)
+    response = requests.post(url, json=payload_checkout, headers=headers, verify=certifi.where())
 
 # Output result
 if (response.status_code == 200):
