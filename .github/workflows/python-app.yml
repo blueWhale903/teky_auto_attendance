@@ -30,4 +30,4 @@ jobs:
 
     - name: Run attendance bot
       run: |
-        python test.py
+        python main.py
