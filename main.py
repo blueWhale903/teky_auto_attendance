@@ -28,7 +28,7 @@ headers = {
     "Referer": "https://erp.teky.edu.vn/web",
     "X-Requested-With": "XMLHttpRequest",
     "Accept": "application/json, text/javascript, */*; q=0.01",
-    "Cookie": "session_id=31995f276b27540d19421d70021e4a6a1ca19bdf; frontend_lang=en_US"
+    "Cookie": "session_id=oqp8m8x970fqmo3y7cyd303k3w2l7mxq; frontend_lang=en_US"
 }
 
 # Payload (customize employee ID if needed)
