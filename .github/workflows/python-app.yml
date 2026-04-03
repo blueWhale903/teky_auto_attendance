@@ -2,17 +2,6 @@ name: Auto Attendance Bot
 
 on:
   schedule:
-    - cron: "55 23 * * *"   # 07:30 AM Vietnam (00:30 UTC)
-    - cron: "5 14 * * *"   # 09:05 PM Vietnam (14:05 UTC)
-  workflow_dispatch:  # allows manual run
-
-permissions:
-  contents: read
-
-name: Auto Attendance Bot
-
-on:
-  schedule:
     - cron: "30 0 * * *"   # 07:30 AM Vietnam (00:30 UTC)
     - cron: "5 14 * * *"   # 09:05 PM Vietnam (14:05 UTC)
   workflow_dispatch:
@@ -26,7 +15,7 @@ jobs:
 
     steps:
     - name: Checkout repository
-      uses: actions/checkout@v4   
+      uses: actions/checkout@v4  
 
     - name: Set up Python 3.10
       uses: actions/setup-python@v5  
